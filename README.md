@@ -1,160 +1,310 @@
-# CloudPulse Monitor
 
-CloudPulse Monitor is a real-time multi-cloud health monitoring dashboard for AWS, Azure, GCP, and on-premise infrastructure.
+# CloudVista-360 | CloudPulse Monitor
 
-It provides a unified view of:
-- Overall platform health and uptime
-- CPU and memory utilization
-- Network latency and throughput
-- Application/resource status
-- Security and performance alerts
+<p align="center">
+  <strong>Real-Time Multi-Cloud Infrastructure Monitoring Dashboard</strong>
+</p>
 
-This project uses simulated data so you can demo and extend the architecture without needing real cloud credentials. The backend and UI are structured to easily plug in real metrics from CloudWatch, Azure Monitor, GCP Cloud Monitoring, or on-prem systems later.
-
----
-
-## Features
-
-- **Unified multi-cloud overview**: Aggregated health score, uptime, and utilization across AWS, Azure, GCP, and on-prem.
-- **Per-provider health**: Status cards and KPIs for each cloud provider.
-- **Resource-level metrics**: Simulated servers/services with CPU, memory, uptime, latency, error rate, and security incident counts.
-- **Real-time updates**: WebSocket stream that pushes updated metrics and alerts every few seconds.
-- **Alerting**: Threshold-based alerts for availability, performance, errors, and security behavior.
-- **Modern dashboard UI**: Responsive layout, dark-themed dashboard, cards, tables, and visual metric bars built with React + TailwindCSS.
+<p align="center">
+  <img src="https://img.shields.io/badge/React-Frontend-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React"/>
+  <img src="https://img.shields.io/badge/TypeScript-Language-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript"/>
+  <img src="https://img.shields.io/badge/Node.js-Backend-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Node.js"/>
+  <img src="https://img.shields.io/badge/Express-API-000000?style=for-the-badge&logo=express&logoColor=white" alt="Express"/>
+  <img src="https://img.shields.io/badge/Socket.IO-Real--Time-010101?style=for-the-badge&logo=socketdotio&logoColor=white" alt="Socket.IO"/>
+  <img src="https://img.shields.io/badge/TailwindCSS-Styling-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS"/>
+  <img src="https://img.shields.io/badge/Vite-Build%20Tool-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite"/>
+</p>
 
 ---
 
-## Tech Stack
+## 1. Project Overview
 
-- **Backend**
-  - Node.js, TypeScript
-  - Express (REST API)
-  - Socket.IO (real-time metrics stream)
-  - In-memory metric simulator for AWS, Azure, GCP, on-prem
+**CloudVista-360**, also known as **CloudPulse Monitor**, is a real-time multi-cloud infrastructure monitoring dashboard designed to provide a unified view of infrastructure health and performance.
 
-- **Frontend**
-  - React + TypeScript
-  - Vite (bundler/dev server)
-  - TailwindCSS (styling)
-  - Socket.IO client (live updates)
+The application simulates monitoring data across:
 
----
+- Amazon Web Services (AWS)
+- Microsoft Azure
+- Google Cloud Platform (GCP)
+- On-premise infrastructure
 
-## Project Structure
+It provides a centralized dashboard to visualize infrastructure health, resource utilization, network performance and security-related alerts.
 
-```text
-CloudVista 360 /
-  README.md
-  backend /
-    package.json
-    tsconfig.json
-    src /
-      index.ts
-      config.ts
-      types.ts
-      data /
-        mockProviders.ts
-      services /
-        metricsService.ts
-  frontend /
-    package.json
-    tsconfig.json
-    vite.config.ts
-    postcss.config.cjs
-    tailwind.config.cjs
-    index.html
-    src /
-      main.tsx
-      App.tsx
-      index.css
-      types.ts
+The backend generates simulated infrastructure metrics and streams real-time updates to the frontend using WebSockets.
+
+**Note:** This project currently uses simulated monitoring data. It does not directly connect to live AWS, Azure or GCP accounts.
+
+## 2. Key Features
+
+### Multi-Cloud Monitoring
+- Unified monitoring overview for AWS, Azure, GCP and on-premise environments.
+- Aggregated infrastructure health score and uptime.
+- Individual cloud provider health status.
+
+### Real-Time Infrastructure Metrics
+- CPU utilization.
+- Memory utilization.
+- Network latency and throughput.
+- Resource uptime.
+- Error rates.
+- Security incident counts.
+
+### Monitoring and Alerts
+- Threshold-based infrastructure alerts.
+- Healthy, warning and critical resource classifications.
+- Alerts for high CPU utilization, degraded uptime, latency and repeated errors.
+- Real-time metric updates through Socket.IO.
+
+### Dashboard Interface
+- Modern dark-themed monitoring dashboard.
+- Responsive user interface.
+- Provider status cards and KPI displays.
+- Resource monitoring tables.
+- Visual metric indicators.
+
+## 3. Technology Stack
+
+| Technology | Purpose |
+|---|---|
+| React.js | Frontend user interface |
+| TypeScript | Type-safe development |
+| Vite | Frontend development and build tool |
+| Tailwind CSS | UI styling |
+| Node.js | Backend runtime |
+| Express.js | REST API |
+| Socket.IO | Real-time communication |
+| Mock Providers | Simulated cloud monitoring data |
+
+## 4. System Architecture
+
+The application follows a frontend-backend architecture with real-time communication.
+
+```mermaid
+flowchart TD
+    A[Mock Cloud Providers] --> B[Metrics Service]
+    B --> C[Node.js Backend]
+    C --> D[Express REST API]
+    C --> E[Socket.IO Server]
+    D --> F[React Frontend]
+    E --> F
+    F --> G[Monitoring Dashboard]
+    G --> H[Health and Performance Metrics]
+    G --> I[Real-Time Alerts]
 ```
 
----
+### Architecture Workflow
 
-## Getting Started
+1. Mock providers generate infrastructure metrics for different cloud environments.
+2. The metrics service processes and updates resource information.
+3. The Express backend serves API data.
+4. Socket.IO streams updated metrics and alerts to connected clients.
+5. The React dashboard visualizes the monitoring information.
+
+## 5. Project Structure
+
+```text
+CloudVista-360/
+│
+├── backend/
+│   ├── src/
+│   │   ├── data/
+│   │   │   └── mockProviders.ts
+│   │   ├── services/
+│   │   │   └── metricsService.ts
+│   │   ├── config.ts
+│   │   ├── index.ts
+│   │   └── types.ts
+│   ├── package.json
+│   └── tsconfig.json
+│
+├── frontend/
+│   ├── src/
+│   │   ├── App.tsx
+│   │   ├── main.tsx
+│   │   ├── index.css
+│   │   └── types.ts
+│   ├── index.html
+│   ├── package.json
+│   ├── vite.config.ts
+│   ├── tailwind.config.cjs
+│   └── postcss.config.cjs
+│
+├── .gitignore
+├── package.json
+├── package-lock.json
+└── README.md
+```
+
+## 6. Getting Started
+
+Follow these instructions to run the project locally.
 
 ### Prerequisites
 
-- Node.js 18+ (recommended)
-- npm or yarn
+Make sure you have installed:
 
-### 1. Install backend dependencies
+- Node.js 18 or above
+- npm
+- Git
+
+### Step 1: Clone the Repository
+
+```bash
+git clone https://github.com/Chandanmn0724/CloudVista-360.git
+```
+
+```bash
+cd CloudVista-360
+```
+
+### Step 2: Set Up the Backend
+
+Open a terminal:
 
 ```bash
 cd backend
 npm install
 ```
 
-### 2. Run the backend (API + WebSocket)
+### Step 3: Start the Backend Server
 
 ```bash
 npm run dev
 ```
 
-The backend will start on `http://localhost:4000` by default.
+The backend runs by default at:
 
-### 3. Install frontend dependencies
+```text
+http://localhost:4000
+```
 
-In a new terminal:
+### Step 4: Set Up the Frontend
+
+Open a second terminal from the project root:
 
 ```bash
 cd frontend
 npm install
 ```
 
-### 4. Run the frontend (dashboard)
+### Step 5: Start the Frontend
 
 ```bash
 npm run dev
 ```
 
-The frontend dev server usually runs on `http://localhost:5173`.
+The Vite development server usually runs at:
 
-The dashboard will automatically connect to the backend API and WebSocket using these defaults.
+```text
+http://localhost:5173
+```
 
----
+Open the frontend address in your browser to access the monitoring dashboard.
 
-## Configuration
+Keep both backend and frontend terminals running.
 
-### Backend
+## 7. Configuration
 
-Environment variables (optional):
+The application supports environment-based configuration.
 
-- `PORT`: Port for the backend server (default: `4000`).
-- `FRONTEND_ORIGIN`: Allowed CORS/WebSocket origin (default: `http://localhost:5173`).
+### Backend Environment Variables
 
-### Frontend
+| Variable | Description | Default |
+|---|---|---|
+| `PORT` | Backend server port | `4000` |
+| `FRONTEND_ORIGIN` | Allowed frontend origin for CORS and WebSocket connections | `http://localhost:5173` |
 
-You can override the backend URLs using a `.env` file in `frontend`:
+These variables are optional.
 
-```bash
+### Frontend Environment Variables
+
+Create a `.env` file inside the `frontend` directory if you need to override the backend connection settings.
+
+```env
 VITE_API_BASE_URL=http://localhost:4000/api
 VITE_SOCKET_URL=http://localhost:4000
 ```
 
+## 8. How the Monitoring Simulation Works
+
+The application uses a simulated metrics engine to demonstrate infrastructure monitoring.
+
+The workflow:
+
+1. A collection of infrastructure resources is created across AWS, Azure, GCP and on-premise environments.
+2. The backend periodically updates resource metrics with small random variations.
+3. Metrics such as CPU, memory, latency, uptime and error rate are updated.
+4. Threshold-based rules classify resources as healthy, warning or critical.
+5. Alerts are generated when resource metrics cross configured thresholds.
+6. Global and provider-level health scores are calculated.
+7. Updated metrics and alerts are streamed to the frontend using Socket.IO.
+
+This approach allows the monitoring dashboard to demonstrate real-time behavior without requiring cloud account credentials.
+
+## 9. Extending the Project to Real Cloud Providers
+
+The current implementation uses simulated data. It can be extended to integrate real infrastructure monitoring services.
+
+Potential integrations include:
+
+| Cloud / Platform | Monitoring Service |
+|---|---|
+| AWS | Amazon CloudWatch |
+| Microsoft Azure | Azure Monitor |
+| Google Cloud | Cloud Monitoring |
+| On-premise | Prometheus and custom monitoring agents |
+
+Possible improvements:
+
+- Replace mock providers with actual cloud monitoring integrations.
+- Map provider-specific metrics into a common resource data model.
+- Store historical metrics in a database.
+- Add historical performance charts.
+- Implement user authentication and role-based access.
+- Add configurable alert thresholds.
+- Introduce centralized logging and monitoring.
+
+## 10. Learning Outcomes
+
+Through this project, I gained practical experience in:
+
+- Building a full-stack application using React and Node.js.
+- Developing backend services using Express and TypeScript.
+- Implementing real-time communication using Socket.IO.
+- Designing monitoring dashboards and metric visualizations.
+- Understanding multi-cloud infrastructure monitoring concepts.
+- Working with simulated infrastructure metrics and alert thresholds.
+- Configuring frontend and backend development environments.
+
+## 11. Future Enhancements
+
+- Integrate real AWS, Azure and GCP monitoring APIs.
+- Add persistent storage for historical infrastructure metrics.
+- Implement authentication and role-based access control.
+- Add advanced analytics and historical dashboards.
+- Implement configurable alert notifications.
+- Introduce containerization and CI/CD automation.
+
+## 12. Author
+
+**Chandan M N**
+
+B.E. – Artificial Intelligence and Data Science
+
+<p align="left">
+  <a href="https://github.com/ChandanMN0724">
+    <img src="https://img.shields.io/badge/GitHub-Visit%20Profile-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Profile"/>
+  </a>
+  <a href="https://www.linkedin.com/in/chandanmn07">
+    <img src="https://img.shields.io/badge/LinkedIn-Connect%20with%20me-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn Profile"/>
+  </a>
+</p>
+
+**Email:** [mnchandan605@gmail.com](mailto:mnchandan605@gmail.com)
+
 ---
 
-## How the Simulation Works
-
-- A pool of resources is created across AWS, Azure, GCP, and on-prem.
-- Every few seconds the backend updates CPU, memory, latency, error rate, and uptime with small random variations.
-- Based on thresholds, each resource is classified as **healthy**, **warning**, or **critical**.
-- Alerts are emitted when metrics cross thresholds (e.g., high CPU, degraded uptime, high latency, repeated errors, or security incidents).
-- A global health score and per-provider scores are computed and pushed to the frontend via WebSocket.
-
----
-
-## Extending to Real Cloud Providers
-
-To plug in real data instead of the simulator, you can:
-
-- Replace the simulator in `backend/src/data/mockProviders.ts` with calls to:
-  - AWS CloudWatch / CloudWatch Logs
-  - Azure Monitor / Log Analytics
-  - GCP Cloud Monitoring / Cloud Logging
-  - On-prem Prometheus / custom agents
-- Map provider-specific metrics into the unified `ResourceMetric` and `Alert` types.
-- Optionally persist metrics in a database (e.g., PostgreSQL, TimescaleDB, InfluxDB) and add historical views.
-
-The current structure is intentionally simple but layered so you can demonstrate both architecture and UI/UX in a project or academic setting.
+<div align="center">
+  <p><strong>Built with React, TypeScript, Node.js and Socket.IO.</strong></p>
+  <p><em>Exploring real-time monitoring and cloud infrastructure.</em></p>
+</div>
